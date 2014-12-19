@@ -17,6 +17,9 @@
 #define MAXN    3
 #define DSTART  4
 #define DEND  	5
+#define D1START 6
+#define D1END  	7
+
 
 uint8_t gb_BuforStatus;
 uint8_t gi_BuforTempMINGrzalkiDzien;
@@ -27,6 +30,10 @@ uint8_t gi_BuforTempMAXGrzalkiNoc;
 
 uint8_t gi_BuforDzienStartH;
 uint8_t gi_BuforDzienEndH;
+
+uint8_t gi_BuforDzien1StartH;
+uint8_t gi_BuforDzien1EndH;
+
 
 uint8_t gb_BuforDzien;
 

@@ -1,5 +1,5 @@
-/* "led.c" - programik do testowania œrodowiska WinAVR */
-/* uk³ad ATmega 1MHz */
+/* "led.c" - programik do testowania ï¿½rodowiska WinAVR */
+/* ukï¿½ad ATmega 1MHz */
 /* PB0,PB1 - diody LED; PD0 - przycisk */
 
 #include <avr/io.h>
@@ -42,7 +42,7 @@ static inline void WaitForRead(void) {
 int main(void) {
 	GLCD_Init();
 	GLCD_ClearScreen();
-	GLCD_WriteString("wersja 1.7");
+	GLCD_WriteString("wersja 1.8");
 	BUTInit();
 	//BANInit();
 	TimeInit();
@@ -77,7 +77,7 @@ int main(void) {
 }
 #else
 //*********************************
-//zmieniaj aktualn¹ wersjê
+//zmieniaj aktualnï¿½ wersjï¿½
 static inline uint8_t ChangeVer(void) {
 	uint8_t vi_NewSubVer;
 	switch (gi_BUTPrevValue) {
@@ -110,7 +110,7 @@ static inline uint8_t ChangeVer(void) {
 } //ChangeVer
 
 //*********************************
-//œpij z dok³adnoœci¹ do 1/100sec, rysuj¹c w tym czasie zegar gdy trzeba i przewijaj¹c baner
+//ï¿½pij z dokï¿½adnoï¿½ciï¿½ do 1/100sec, rysujï¿½c w tym czasie zegar gdy trzeba i przewijajï¿½c baner
 static inline void WaitForRead(void) {
 	gi_BUTPrevValue = 0;
 	while ((!gb_TempReaded) && (!gi_BUTPrevValue)) {
@@ -118,7 +118,7 @@ static inline void WaitForRead(void) {
 		TimePrint();
 		TimeSleep();
 		if (gi_BUTValue==BUT_LEFT && gi_BUTSec>=2) {
-			//wciœniêty center od ponad 2 sekund => wejdŸ do menu
+			//wciï¿½niï¿½ty center od ponad 2 sekund => wejdï¿½ do menu
 			MENUExecute(0,0,0);
 			gb_IsChanged = CHANGED_VER;
 			gi_BUTPrevValue = 0;
@@ -147,7 +147,7 @@ static inline void PrintFirstTime(void) {
 	vi_H1/*,vi_H2,vb_Mode1,vb_Mode2*/;
 
 	switch (gi_Ver) {
-	case 0: //du¿a/œrednia temperatura, ma³y/œredni czas
+	case 0: //duï¿½a/ï¿½rednia temperatura, maï¿½y/ï¿½redni czas
 		TimeAddSet(TPRINT_DAY, 0, PSTR("d3"), CS_Z6p, 20, 0, ALIGN_LEFT);
 		TimeAddSet(TPRINT_DAY, 1, PSTR("D2.M2"), CS_Z6p, 0, 0, ALIGN_LEFT);
 		TimeAddSet(TPRINT_MIN, 0, PSTR("h1:m2"), CS_Z6p, 0, 7, ALIGN_LEFT);
@@ -161,7 +161,7 @@ static inline void PrintFirstTime(void) {
 		}
 		break;
 
-	case 1:	//œrednia temperatura, ma³y wykres, ma³y czas, baner z dat¹
+	case 1:	//ï¿½rednia temperatura, maï¿½y wykres, maï¿½y czas, baner z datï¿½
 //		BANSetParams(20, 11, CS_Z9p, 1, 20);
 //		BANOn();
 		switch (gt_SubVer[gi_Ver]) {
@@ -184,7 +184,7 @@ static inline void PrintFirstTime(void) {
 		TempChartInit(/*vi_X1*/66, vi_Y1, TempBuff(TEMP_BUFF24m,Size) + 2, vi_H1, 0, TEMP_BUFF24m);
 		break;
 
-	case 2: //du¿y wykres
+	case 2: //duï¿½y wykres
 		TempChartInit((LCD_W - TempBuff(gt_SubVer[gi_Ver],Size) - 4) / 2, 0, TempBuff(gt_SubVer[gi_Ver],Size) + 4, LCD_H, 1, gt_SubVer[gi_Ver]);
 		break;
 	}
@@ -195,7 +195,7 @@ static inline void PrintFirstTime(void) {
 
 
 //*********************************
-//wyœwietlaj zmiany na zainicjalizowanym ekranie
+//wyï¿½wietlaj zmiany na zainicjalizowanym ekranie
 static inline void PrintNextTime(void) {
 //	BANWaitForSroll();
 	int8_t vi_CS1, vi_CS2,/*vi_X1,*//*vi_X2,*//*vi_Y1,*/vi_Y2,/*vi_H1,*/vi_H2, vb_Force;
@@ -205,7 +205,7 @@ static inline void PrintNextTime(void) {
 	vf_tMax = BuforSprawdz();
 
 	switch (gi_Ver) {
-	case 0: //dœrednia temperatura, ma³y czas
+	case 0: //dï¿½rednia temperatura, maï¿½y czas
 		switch (gt_SubVer[gi_Ver]) {
 		case 0:
 			break;
@@ -235,10 +235,10 @@ static inline void PrintNextTime(void) {
 
 		CSPushParams();
 		CSSet(CS_C13p);
-		CSPrintXYu8AV(LCD_W/2, 0, TempGetV(0,/*TEMP_CURR*/TEMP_TICK,0), ALIGN_CENTER, 0);		//góra bufora
+		CSPrintXYu8AV(LCD_W/2, 0, TempGetV(0,/*TEMP_CURR*/TEMP_TICK,0), ALIGN_CENTER, 0);		//gï¿½ra bufora
 		CSSet(CS_C8p);
 		CSPrintXYu8AV(LCD_W/2, 15, TempGetV(1,/*TEMP_CURR*/TEMP_TICK,0), ALIGN_CENTER, 0);		//srodek bufora
-		CSPrintXYu8AV(LCD_W/2, 23, TempGetV(2,/*TEMP_CURR*/TEMP_TICK,0), ALIGN_CENTER, 0);		//dó³ bufora
+		CSPrintXYu8AV(LCD_W/2, 23, TempGetV(2,/*TEMP_CURR*/TEMP_TICK,0), ALIGN_CENTER, 0);		//dï¿½ bufora
 
 		CSSet(CS_Z6p);
 		if(gb_BuforStatus == BUFOR_GRZEJE){
@@ -247,7 +247,7 @@ static inline void PrintNextTime(void) {
 		}else{
 			CSPrintXYu8AV(0, ci_3l, "-----------", ALIGN_LEFT, 0);
 		}
-		CSPrintXYu8AV(0, ci_4l, "Pod³:", ALIGN_LEFT, 0);
+		CSPrintXYu8AV(0, ci_4l, "Podï¿½:", ALIGN_LEFT, 0);
 		STRInit(gv_TempText, 32);STRAddV(CSFloat2V(TempGetF(3,TEMP_TICK),2,1,1,0));STRAddV("->");STRAddV(CSFloat2V(TempGetF(4,TEMP_TICK),2,1,1,0));
 		CSPrintXYu8AV(0, ci_5l, gv_TempText, ALIGN_LEFT, 0);
 
@@ -276,7 +276,7 @@ static inline void PrintNextTime(void) {
 ///*USUN*/			CSSet(CS_Z6p); CSPrintXYu8AV(128,51,TempGetV(1,TEMP_TICK,0),ALIGN_RIGHT,18);
 		break;
 
-	case 1: //œrednia temperatura, ma³y wykres, baner z dat¹
+	case 1: //ï¿½rednia temperatura, maï¿½y wykres, baner z datï¿½
 		vb_Force = TempChartPrint();
 //		BANWaitForSroll();
 		switch (gt_SubVer[gi_Ver]) {
@@ -324,7 +324,7 @@ static inline void PrintNextTime(void) {
 		STRAddV(TimeGetV(PSTR("d3 D1 M3 Y4 "),gv_TempText));
 		break;
 
-	case 2: //du¿y wykres
+	case 2: //duï¿½y wykres
 		TempChartExecute();
 		break;
 	}
